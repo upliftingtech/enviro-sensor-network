@@ -1,9 +1,5 @@
-#include <Wire.h>
-#include <Adafruit_Sensor.h>
-#include <Adafruit_BMP085_U.h>
-
 // Modified for ESP8266 - Brian Ernst Feb 2021
-// Add WiFi and MQTT code
+// ToDo: Add WiFi and MQTT code
 
 /* This driver uses the Adafruit unified sensor library (Adafruit_Sensor),
    which provides a common 'type' for sensor data and some helper functions.
@@ -28,6 +24,18 @@
    2013/JUN/17  - Updated altitude calculations (KTOWN)
    2013/FEB/13  - First version (KTOWN)
 */
+
+// INCLUDE
+
+// includes for BMP180 temp sensor via I2C
+#include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BMP085_U.h>
+
+// includes for MQTT via WiFi
+#include <ESP8266WiFi.h>        // WiFi
+#include <PubSubClient.h>       // MQTT
+
    
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085);
 
