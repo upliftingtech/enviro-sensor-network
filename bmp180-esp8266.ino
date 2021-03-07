@@ -119,6 +119,10 @@ void setup(void)
   
   /* Display some basic information on this sensor */
   displaySensorDetails();
+  
+// Setup the Wifi connection
+  setup_wifi();
+
 }
 
 /**************************************************************************/
