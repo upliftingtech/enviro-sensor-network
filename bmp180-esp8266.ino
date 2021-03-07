@@ -99,6 +99,30 @@ void setup_wifi() {
   Serial.println(WiFi.localIP());
 }
 
+// MQTT reconnect function - connects and reconnects to MQTT server
+void reconnect() {
+  // Loop until we're reconnected
+  while (!client.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    // Create a random client ID
+    String clientId = "ESP8266Client-";
+    clientId += String(random(0xffff), HEX);
+    // Attempt to connect
+    if (client.connect(clientId.c_str())) {
+      Serial.println("connected");
+      // Once connected, publish an announcement...
+      client.publish("outTopic", "hello world");
+    } else {
+      Serial.print("failed, rc=");
+      Serial.print(client.state());
+      Serial.println(" try again in 5 seconds");
+      // Wait 5 seconds before retrying
+      delay(5000);
+    }
+  }
+}
+
+
 
 
 /**************************************************************************/
@@ -185,5 +209,6 @@ void loop(void)
   {
     Serial.println("Sensor error");
   }
-  delay(1000);
+  delay(1000); // need to change this before adding mqtt code. needs to be non-blocking
+               // or could try it with the delay but it is not ideal
 }
