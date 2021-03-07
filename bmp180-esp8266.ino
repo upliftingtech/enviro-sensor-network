@@ -43,8 +43,14 @@ const char* ssid = "bouncyhouse";
 const char* password = "bakabaka";
 const char* mqtt_server = "192.168.2.10";
 
+// Instantiate MQTT and WiFi clients
+WiFiClient espClient;
+PubSubClient client(espClient);
 
-   
+// var for timer - replace with chrono
+unsigned long lastMsg = 0;
+
+// Instantiate sensor data object
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085);
 
 /**************************************************************************/
