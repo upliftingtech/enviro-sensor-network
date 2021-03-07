@@ -1,5 +1,4 @@
 // Modified for ESP8266 - Brian Ernst Feb 2021
-// ToDo: Add WiFi and MQTT code
 
 /* This driver uses the Adafruit unified sensor library (Adafruit_Sensor),
    which provides a common 'type' for sensor data and some helper functions.
@@ -54,13 +53,10 @@ char msg[MSG_BUFFER_SIZE];
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-// var for timer - replace with chrono
-unsigned long lastMsg = 0;
-
 // Instantiate sensor data object
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085);
 
-// Instanciate a Chrono object.
+// Instantiate a Chrono object.
 Chrono timeToSample; 
 
 /**************************************************************************/
