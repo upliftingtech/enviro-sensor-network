@@ -177,7 +177,7 @@ void getSensorEvent()
 	    Serial.println("");
 	    
 	    // send temp to mqtt
-        snprintf (msg, MSG_BUFFER_SIZE, "temp: #%ld", temperature);
+        snprintf (msg, MSG_BUFFER_SIZE, "temp: %3.1f C", temperature);
         Serial.print("Publish message: ");
         Serial.println(msg);
 	    client.publish("temp01", msg);
