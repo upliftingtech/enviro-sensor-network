@@ -75,6 +75,30 @@ void displaySensorDetails(void)
   delay(500);
 }
 
+void setup_wifi() {
+
+  delay(10);
+  // We start by connecting to a WiFi network
+  Serial.println();
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  randomSeed(micros());
+
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+}
+
 /**************************************************************************/
 /*
     Arduino setup function (automatically called at startup)
@@ -82,7 +106,7 @@ void displaySensorDetails(void)
 /**************************************************************************/
 void setup(void) 
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("Pressure Sensor Test"); Serial.println("");
   
   /* Initialise the sensor */
@@ -154,4 +178,3 @@ void loop(void)
   }
   delay(1000);
 }
-
