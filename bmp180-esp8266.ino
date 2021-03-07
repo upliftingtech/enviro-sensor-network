@@ -36,6 +36,14 @@
 #include <ESP8266WiFi.h>        // WiFi
 #include <PubSubClient.h>       // MQTT
 
+// Constants for MQTT via WiFi
+// Update these with values suitable for your network.
+
+const char* ssid = "bouncyhouse";
+const char* password = "bakabaka";
+const char* mqtt_server = "192.168.2.10";
+
+
    
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085);
 
