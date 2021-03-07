@@ -1,13 +1,13 @@
-// Modified for ESP8266 - Brian Ernst Feb 2021
-// Added MQTT and WIFI code - Brian Ernst March 2021
-
 /*
-   Connections for ESP 8266
-   ===========
-   Connect SCL to D1
-   Connect SDA to D2
-   Connect VDD to 3.3V DC
-   Connect GROUND to common ground
+ *  Modified for ESP8266     - Brian Ernst Feb 2021
+ *  Added MQTT and WIFI code - Brian Ernst March 2021
+
+    Connections for ESP 8266
+    ===========
+    Connect SCL to D1
+    Connect SDA to D2
+    Connect VDD to 3.3V DC
+    Connect GROUND to common ground
  */
 
 // INCLUDE
