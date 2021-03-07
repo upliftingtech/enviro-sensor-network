@@ -46,6 +46,10 @@ const char* ssid = "bouncyhouse";
 const char* password = "bakabaka";
 const char* mqtt_server = "192.168.2.10";
 
+// global message buffer for mqtt
+#define MSG_BUFFER_SIZE	(50)
+char msg[MSG_BUFFER_SIZE];
+
 // Instantiate MQTT and WiFi clients
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -171,6 +175,13 @@ void getSensorEvent()
 	                                        event.pressure)); 
 	    Serial.println(" m");
 	    Serial.println("");
+	    
+	    // send temp to mqtt
+        snprintf (msg, MSG_BUFFER_SIZE, "temp: #%ld", temperature);
+        Serial.print("Publish message: ");
+        Serial.println(msg);
+	    client.publish("temp01", msg);
+
 	  }
 	  else
 	  {
