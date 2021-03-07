@@ -162,6 +162,13 @@ void setup(void)
 /**************************************************************************/
 void loop(void) 
 {
+  // Connect to MQTT server and reconnect if disconnected
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop(); // non-blocking mqtt background updates
+
+	
   /* Get a new sensor event */ 
   sensors_event_t event;
   bmp.getEvent(&event);
