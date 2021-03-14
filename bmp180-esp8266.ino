@@ -12,6 +12,9 @@
 
 // INCLUDE
 
+// include
+#include <Streaming.h>
+
 // includes for BMP180 temp sensor via I2C
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
@@ -43,7 +46,11 @@ PubSubClient client(espClient);
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085);
 
 // Instantiate a Chrono object.
-Chrono timeToSample; 
+Chrono timeToSample;
+
+// Instantiate an Arduino String class to store our client ID
+String clientId = "sensor-";
+
 
 /**************************************************************************/
 /*
@@ -96,9 +103,6 @@ void reconnect() {
   // Loop until we're reconnected
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
-    // Create a random client ID
-    String clientId = "ESP8266Client-";
-    clientId += String(random(0xffff), HEX);
     // Attempt to connect
     if (client.connect(clientId.c_str())) {
       Serial.println("connected");
@@ -159,10 +163,12 @@ void getSensorEvent()
 	    Serial.println("");
 	    
 	    // send temp to mqtt
-        snprintf (msg, MSG_BUFFER_SIZE, "temp: %3.1f C", temperature);
+        snprintf (msg, MSG_BUFFER_SIZE, "%3.1f", temperature);
+ 	    client.publish("sensor01", msg); // to do: use clientID for topic
+
+        // output temp to serial
         Serial.print("Publish message: ");
         Serial.println(msg);
-	    client.publish("temp01", msg);
 
 	  }
 	  else
@@ -194,6 +200,13 @@ void setup(void)
   
 // Setup the Wifi connection
   setup_wifi();
+
+// The wifi takes a variable amount of time to connect so using millis
+// as a seed here is a good way to initialize the random generator
+  randomSeed(millis());
+
+// Create a random client ID
+  clientId += String(random(0xffff), HEX);
 
 // Setup MQTT client
   client.setServer(mqtt_server, 1883);
