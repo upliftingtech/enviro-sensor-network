@@ -12,6 +12,9 @@
 
 // INCLUDE
 
+// include
+#include <Streaming.h>
+
 // includes for BMP180 temp sensor via I2C
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
@@ -163,7 +166,7 @@ void getSensorEvent()
         snprintf (msg, MSG_BUFFER_SIZE, "temp: %3.1f C", temperature);
         Serial.print("Publish message: ");
         Serial.println(msg);
-	    client.publish("temp01", msg);
+	    client.publish(clientId, msg); // use clientID for topic
 
 	  }
 	  else
