@@ -45,6 +45,9 @@ PubSubClient client(espClient);
 // Instantiate sensor data object
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085);
 
+// global sensor event object
+sensors_event_t sensor_event;
+
 // Instantiate a Chrono object.
 Chrono timeToSample;
 
@@ -120,15 +123,14 @@ void reconnect() {
 
 void getSensorEvent()
 {
-	  sensors_event_t event;
-	  bmp.getEvent(&event);
+	  bmp.getEvent(&sensor_event);
 	 
 	  /* Display the results (barometric pressure is measure in hPa) */
-	  if (event.pressure)
+	  if (sensor_event.pressure)
 	  {
 	    /* Display atmospheric pressue in hPa */
 	    Serial.print("Pressure:    ");
-	    Serial.print(event.pressure);
+	    Serial.print(sensor_event.pressure);
 	    Serial.println(" hPa");
 	    
 	    /* Calculating altitude with reasonable accuracy requires pressure    *
@@ -158,7 +160,7 @@ void getSensorEvent()
 	    float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
 	    Serial.print("Altitude:    "); 
 	    Serial.print(bmp.pressureToAltitude(seaLevelPressure,
-	                                        event.pressure)); 
+	                                        sensor_event.pressure)); 
 	    Serial.println(" m");
 	    Serial.println("");
 	    
