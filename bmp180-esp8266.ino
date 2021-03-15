@@ -228,7 +228,7 @@ void loop(void)
   }
   client.loop(); // non-blocking mqtt background updates
 
-  if (timeToSample.hasPassed(1000)) // returns 1 if 1000 ms have passed
+  if (timeToSample.hasPassed(10000)) // returns 1 if 10000 ms (10 seconds) have passed
   {
 	  timeToSample.restart();       // restart timer
 	  /* Get a new sensor event */ 
