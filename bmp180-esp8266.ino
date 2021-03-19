@@ -217,7 +217,7 @@ void loop(void)
 	    
 	    // send temp to mqtt
 	    snprintf (msg, MSG_BUFFER_SIZE, "%3.1f", temperature);
-	    client.publish("sensor01", msg); // to do: use clientID for topic
+	    client.publish("sensors/001", msg);
 
 	    // output temp to serial
 	    Serial.print("Publish message: ");
