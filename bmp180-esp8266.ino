@@ -166,9 +166,7 @@ void loop(void)
 	  if (sensor_event.pressure)
 	  {
 	    /* Display atmospheric pressue in hPa */
-	    Serial << "Pressure:    ";
-	    Serial.print(sensor_event.pressure);
-	    Serial.println(" hPa");
+	    Serial << "Pressure:    " << sensor_event.pressure << endl;
 	    
 	    /* Calculating altitude with reasonable accuracy requires pressure    *
 	     * sea level pressure for your position at the moment the data is     *
