@@ -45,9 +45,6 @@ PubSubClient client(espClient);
 // Instantiate sensor data object
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085);
 
-// global sensor event object
-sensors_event_t sensor_event;
-
 // Instantiate a Chrono object.
 Chrono timeToSample;
 
@@ -121,8 +118,63 @@ void reconnect() {
   }
 }
 
-void getSensorEvent()
+
+/**************************************************************************/
+/*
+    Arduino setup function (automatically called at startup)
+*/
+/**************************************************************************/
+void setup(void) 
 {
+  Serial.begin(115200);
+  Serial.println("Pressure Sensor Test"); Serial.println("");
+  
+  /* Initialize the sensor */
+  if(!bmp.begin())
+  {
+    /* There was a problem detecting the BMP085 ... check your connections */
+    Serial.print("Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!");
+    while(1);
+  }
+  
+  /* Display some basic information on this sensor */
+  displaySensorDetails();
+  
+// Setup the Wifi connection
+  setup_wifi();
+
+// The wifi takes a variable amount of time to connect so using millis
+// as a seed here is a good way to initialize the random generator
+  randomSeed(millis());
+
+// Create a random client ID
+  clientId += String(random(0xffff), HEX);
+
+// Setup MQTT client
+  client.setServer(mqtt_server, 1883);
+
+}
+
+/**************************************************************************/
+/*
+    Arduino loop function, called once 'setup' is complete
+*/
+/**************************************************************************/
+void loop(void) 
+{
+  sensors_event_t sensor_event;
+ 
+  // Connect to MQTT server and reconnect if disconnected
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop(); // non-blocking mqtt background updates
+
+  if (timeToSample.hasPassed(10000)) // returns 1 if 10000 ms (10 seconds) have passed
+  {
+	  timeToSample.restart();       // restart timer
+	  /* Get a new sensor event */ 
+
 	  bmp.getEvent(&sensor_event);
 	 
 	  /* Display the results (barometric pressure is measure in hPa) */
@@ -177,62 +229,6 @@ void getSensorEvent()
 	  {
 	    Serial.println("Sensor error");
 	  }
-}
-
-/**************************************************************************/
-/*
-    Arduino setup function (automatically called at startup)
-*/
-/**************************************************************************/
-void setup(void) 
-{
-  Serial.begin(115200);
-  Serial.println("Pressure Sensor Test"); Serial.println("");
-  
-  /* Initialize the sensor */
-  if(!bmp.begin())
-  {
-    /* There was a problem detecting the BMP085 ... check your connections */
-    Serial.print("Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!");
-    while(1);
-  }
-  
-  /* Display some basic information on this sensor */
-  displaySensorDetails();
-  
-// Setup the Wifi connection
-  setup_wifi();
-
-// The wifi takes a variable amount of time to connect so using millis
-// as a seed here is a good way to initialize the random generator
-  randomSeed(millis());
-
-// Create a random client ID
-  clientId += String(random(0xffff), HEX);
-
-// Setup MQTT client
-  client.setServer(mqtt_server, 1883);
-
-}
-
-/**************************************************************************/
-/*
-    Arduino loop function, called once 'setup' is complete
-*/
-/**************************************************************************/
-void loop(void) 
-{
-  // Connect to MQTT server and reconnect if disconnected
-  if (!client.connected()) {
-    reconnect();
-  }
-  client.loop(); // non-blocking mqtt background updates
-
-  if (timeToSample.hasPassed(10000)) // returns 1 if 10000 ms (10 seconds) have passed
-  {
-	  timeToSample.restart();       // restart timer
-	  /* Get a new sensor event */ 
-	  getSensorEvent();
 	  
   } // endif timeToSample.hasPassed
 }
