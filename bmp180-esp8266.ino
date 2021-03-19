@@ -86,8 +86,6 @@ void setup_wifi() {
     Serial << ".";
   }
 
-  randomSeed(micros()); 
-
   Serial << endl;
   Serial << "WiFi connected" << endl;
   Serial << "IP address: " << WiFi.localIP() << endl;
