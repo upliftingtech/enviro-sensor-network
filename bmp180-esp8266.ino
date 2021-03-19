@@ -211,18 +211,17 @@ void loop(void)
 	    /* Update this next line with the current SLP for better results      */
 	    float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
 	    Serial.print("Altitude:    "); 
-	    Serial.print(bmp.pressureToAltitude(seaLevelPressure,
-	                                        sensor_event.pressure)); 
+	    Serial.print(bmp.pressureToAltitude(seaLevelPressure, sensor_event.pressure)); 
 	    Serial.println(" m");
 	    Serial.println("");
 	    
 	    // send temp to mqtt
-        snprintf (msg, MSG_BUFFER_SIZE, "%3.1f", temperature);
- 	    client.publish("sensor01", msg); // to do: use clientID for topic
+	    snprintf (msg, MSG_BUFFER_SIZE, "%3.1f", temperature);
+	    client.publish("sensor01", msg); // to do: use clientID for topic
 
-        // output temp to serial
-        Serial.print("Publish message: ");
-        Serial.println(msg);
+	    // output temp to serial
+	    Serial.print("Publish message: ");
+	    Serial.println(msg);
 
 	  }
 	  else
