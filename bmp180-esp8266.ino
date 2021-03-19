@@ -191,13 +191,12 @@ void loop(void)
 	    /* Then convert the atmospheric pressure, and SLP to altitude         */
 	    /* Update this next line with the current SLP for better results      */
 	    float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
-	    Serial.print("Altitude:    "); 
-	    Serial.print(bmp.pressureToAltitude(seaLevelPressure, sensor_event.pressure)); 
-	    Serial.println(" m");
-	    Serial.println("");
+	    Serial << "Altitude:    "; 
+	    Serial << bmp.pressureToAltitude(seaLevelPressure, sensor_event.pressure); 
+	    Serial << " m" << endl;
 	    
 	    // send temp to mqtt
-	    snprintf (msg, MSG_BUFFER_SIZE, "%3.1f", temperature);
+	    snprintf(msg, MSG_BUFFER_SIZE, "%3.1f", temperature);
 	    client.publish("sensors/001", msg);
 
 	    // output temp to serial
