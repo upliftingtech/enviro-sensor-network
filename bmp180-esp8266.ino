@@ -59,7 +59,7 @@ void displaySensorDetails(void)
 {
   sensor_t sensor;
   bmp.getSensor(&sensor);
-  Serial << "------------------------------------" endl;
+  Serial << "------------------------------------" << endl;
   Serial << "Sensor:       " << sensor.name << endl;
   Serial << "Driver Ver:   " << sensor.version << endl;
   Serial << "Unique ID:    " << sensor.sensor_id << endl;
@@ -121,7 +121,7 @@ void setup(void)
   if(!bmp.begin())
   {
     /* There was a problem detecting the BMP085 ... check your connections */
-    Serial << "Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!" endl;
+    Serial << "Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!" << endl;
     while(1);
   }
   
