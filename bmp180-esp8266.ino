@@ -186,9 +186,7 @@ void loop(void)
 	    /* First we get the current temperature from the BMP085 */
 	    float temperature;
 	    bmp.getTemperature(&temperature);
-	    Serial.print("Temperature: ");
-	    Serial.print(temperature);
-	    Serial.println(" C");
+	    Serial << "Temperature: " << temperature << " C" << endl;
 	
 	    /* Then convert the atmospheric pressure, and SLP to altitude         */
 	    /* Update this next line with the current SLP for better results      */
