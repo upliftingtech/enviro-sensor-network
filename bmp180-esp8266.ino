@@ -54,19 +54,20 @@ String clientId = "sensor-";
 
 //    Displays some basic information on this sensor from the unified
 //    sensor API sensor_t type (see Adafruit_Sensor for more information)
+//    Only called once from setup()
 void displaySensorDetails(void)
 {
   sensor_t sensor;
   bmp.getSensor(&sensor);
-  Serial.println("------------------------------------");
-  Serial.print  ("Sensor:       "); Serial.println(sensor.name);
-  Serial.print  ("Driver Ver:   "); Serial.println(sensor.version);
-  Serial.print  ("Unique ID:    "); Serial.println(sensor.sensor_id);
-  Serial.print  ("Max Value:    "); Serial.print(sensor.max_value); Serial.println(" hPa");
-  Serial.print  ("Min Value:    "); Serial.print(sensor.min_value); Serial.println(" hPa");
-  Serial.print  ("Resolution:   "); Serial.print(sensor.resolution); Serial.println(" hPa");  
-  Serial.println("------------------------------------");
-  Serial.println("");
+  Serial << "------------------------------------" << endl;
+  Serial << "Sensor:       " << sensor.name << endl;
+  Serial << "Driver Ver:   " << sensor.version << endl;
+  Serial << "Unique ID:    " << sensor.sensor_id << endl;
+  Serial << "Max Value:    " << sensor.max_value << " hPa" << endl;
+  Serial << "Min Value:    " << sensor.min_value << " hPa" << endl;
+  Serial << "Resolution:   " << sensor.resolution << " hPa" << endl;  
+  Serial << "------------------------------------" << endl;
+  Serial << endl;
   delay(500);
 }
 
@@ -74,40 +75,37 @@ void setup_wifi() {
 
   delay(10);
   // We start by connecting to a WiFi network
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
+  Serial << endl;
+  Serial << "Connecting to " << ssid << endl;
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    Serial.print(".");
+    Serial << ".";
   }
 
-  randomSeed(micros());
+  randomSeed(micros()); 
 
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
+  Serial << endl;
+  Serial << "WiFi connected" << endl;
+  Serial << "IP address: " << WiFi.localIP() << endl;
 }
 
 // MQTT reconnect function - connects and reconnects to MQTT server
 void reconnect() {
   // Loop until we're reconnected
   while (!client.connected()) {
-    Serial.print("Attempting MQTT connection...");
+    Serial << "Attempting MQTT connection... ";
     // Attempt to connect
     if (client.connect(clientId.c_str())) {
-      Serial.println("connected");
+      Serial << "connected" << endl;
       // Once connected, publish an announcement...
       client.publish("outTopic", "hello world");
-    } else {
-      Serial.print("failed, rc=");
-      Serial.print(client.state());
-      Serial.println(" try again in 5 seconds");
+    } 
+    else {
+      Serial << "failed, rc=" << client.state() << " try again in 5 seconds" << endl;
       // Wait 5 seconds before retrying
       delay(5000);
     }
@@ -117,13 +115,13 @@ void reconnect() {
 void setup(void) 
 {
   Serial.begin(115200);
-  Serial.println("Pressure Sensor Test"); Serial.println("");
+  Serial << "Pressure Sensor Test" << endl << endl;
   
   /* Initialize the sensor */
   if(!bmp.begin())
   {
     /* There was a problem detecting the BMP085 ... check your connections */
-    Serial.print("Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!");
+    Serial << "Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!" << endl;
     while(1);
   }
   
@@ -166,9 +164,7 @@ void loop(void)
 	  if (sensor_event.pressure)
 	  {
 	    /* Display atmospheric pressue in hPa */
-	    Serial.print("Pressure:    ");
-	    Serial.print(sensor_event.pressure);
-	    Serial.println(" hPa");
+	    Serial << "Pressure:    " << sensor_event.pressure << endl;
 	    
 	    /* Calculating altitude with reasonable accuracy requires pressure    *
 	     * sea level pressure for your position at the moment the data is     *
@@ -188,30 +184,25 @@ void loop(void)
 	    /* First we get the current temperature from the BMP085 */
 	    float temperature;
 	    bmp.getTemperature(&temperature);
-	    Serial.print("Temperature: ");
-	    Serial.print(temperature);
-	    Serial.println(" C");
+	    Serial << "Temperature: " << temperature << " C" << endl;
 	
 	    /* Then convert the atmospheric pressure, and SLP to altitude         */
 	    /* Update this next line with the current SLP for better results      */
 	    float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
-	    Serial.print("Altitude:    "); 
-	    Serial.print(bmp.pressureToAltitude(seaLevelPressure, sensor_event.pressure)); 
-	    Serial.println(" m");
-	    Serial.println("");
+	    Serial << "Altitude:    "; 
+	    Serial << bmp.pressureToAltitude(seaLevelPressure, sensor_event.pressure); 
+	    Serial << " m" << endl;
 	    
 	    // send temp to mqtt
-	    snprintf (msg, MSG_BUFFER_SIZE, "%3.1f", temperature);
+	    snprintf(msg, MSG_BUFFER_SIZE, "%3.1f", temperature);
 	    client.publish("sensors/001", msg);
 
 	    // output temp to serial
-	    Serial.print("Publish message: ");
-	    Serial.println(msg);
-
+	    Serial << "Publish message: " << msg << endl;
 	  }
 	  else
 	  {
-	    Serial.println("Sensor error");
+	    Serial << "Sensor error" << endl;
 	  }
 	  
   } // endif timeToSample.hasPassed
