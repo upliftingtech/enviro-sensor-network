@@ -52,12 +52,8 @@ Chrono timeToSample;
 String clientId = "sensor-";
 
 
-/**************************************************************************/
-/*
-    Displays some basic information on this sensor from the unified
-    sensor API sensor_t type (see Adafruit_Sensor for more information)
-*/
-/**************************************************************************/
+//    Displays some basic information on this sensor from the unified
+//    sensor API sensor_t type (see Adafruit_Sensor for more information)
 void displaySensorDetails(void)
 {
   sensor_t sensor;
@@ -118,12 +114,6 @@ void reconnect() {
   }
 }
 
-
-/**************************************************************************/
-/*
-    Arduino setup function (automatically called at startup)
-*/
-/**************************************************************************/
 void setup(void) 
 {
   Serial.begin(115200);
@@ -155,11 +145,6 @@ void setup(void)
 
 }
 
-/**************************************************************************/
-/*
-    Arduino loop function, called once 'setup' is complete
-*/
-/**************************************************************************/
 void loop(void) 
 {
   sensors_event_t sensor_event;
