@@ -166,7 +166,7 @@ void loop(void)
 	  if (sensor_event.pressure)
 	  {
 	    /* Display atmospheric pressue in hPa */
-	    Serial.print("Pressure:    ");
+	    Serial << "Pressure:    ";
 	    Serial.print(sensor_event.pressure);
 	    Serial.println(" hPa");
 	    
