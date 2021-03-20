@@ -21,6 +21,8 @@ void loop()
 
   if (timeToSample.hasPassed(10000))
   {
+    // reset chrono timer
+    timeToSample.restart();
     Serial << "this would be a sample..." << endl;
   }
 }
