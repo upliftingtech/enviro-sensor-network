@@ -6,12 +6,12 @@
 #include <Adafruit_Sensor.h>
 #include "Adafruit_BMP3XX.h"
 
+// includes for ESP8266 WiFi - https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/readme.html#
+#include <ESP8266WiFi.h>
+
 // Constants for WiFi
 const char* ssid = "bouncyhouse";
 const char* password = "bakabaka";
-
-// includes for ESP8266 WiFi - https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/readme.html#
-#include <ESP8266WiFi.h>
 
 // Instantiate a Chrono object.
 Chrono timeToSample;
