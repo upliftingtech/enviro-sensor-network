@@ -1,2 +1,2 @@
-# bmp180-esp8266
- Read data from pressure sensor and publish with MQTT
+# enviro-sensor-network
+ Read data from a network of sensors and publish on a Node Red dashboard.
