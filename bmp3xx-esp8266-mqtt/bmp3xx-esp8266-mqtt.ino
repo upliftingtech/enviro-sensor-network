@@ -11,8 +11,8 @@ Chrono timeToSample;
 
 void setup()
 {
-	Serial.begin(115200);
-	Serial << endl << "Get data from a BMP3xx sensor!" << endl;
+  Serial.begin(115200);
+  Serial << endl << "Get data from a BMP3xx sensor!" << endl;
 }
 
 void loop()
