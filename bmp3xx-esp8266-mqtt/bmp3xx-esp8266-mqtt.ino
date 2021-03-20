@@ -16,7 +16,7 @@ const char* password = "bakabaka";
 // Instantiate a Chrono object.
 Chrono timeToSample;
 
-// Instantiate MQTT and WiFi clients
+// Instantiate WiFi client
 WiFiClient wifiClient;
 
 void setup_wifi() 
