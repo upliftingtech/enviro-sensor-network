@@ -9,6 +9,8 @@
 // includes for ESP8266 WiFi - https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/readme.html#
 #include <ESP8266WiFi.h>
 
+#define SEALEVELPRESSURE_HPA (1013.25)
+
 // Constants for WiFi
 const char* ssid = "bouncyhouse";
 const char* password = "bakabaka";
@@ -18,6 +20,9 @@ Chrono timeToSample;
 
 // Instantiate WiFi client
 WiFiClient wifiClient;
+
+// Instantiate a sensor
+Adafruit_BMP3XX bmpSensor;
 
 void setup_wifi() 
 {
@@ -44,7 +49,21 @@ void setup()
   Serial.begin(115200);
   Serial << endl << "Get data from a BMP3xx sensor!" << endl;
   
+  // start wifi
   setup_wifi();
+  
+  // begin I2C connecton to sensor
+  if (!bmpSensor.begin_I2C())
+  {
+    Serial << "Sensor not found, check wiring." << endl;
+    while (1); // loop forever because hardware will need to be fixed and reset
+  }
+  
+  // Adafruit says to do this to set up oversampling and filter initialization
+  bmpSensor.setTemperatureOversampling(BMP3_OVERSAMPLING_8X);
+  bmpSensor.setPressureOversampling(BMP3_OVERSAMPLING_4X);
+  bmpSensor.setIIRFilterCoeff(BMP3_IIR_FILTER_COEFF_3);
+  bmpSensor.setOutputDataRate(BMP3_ODR_50_HZ);
 }
 
 void loop()
@@ -55,6 +74,14 @@ void loop()
   {
     // reset chrono timer
     timeToSample.restart();
-    Serial << "this would be a sample..." << endl;
+    
+    if (! bmpSensor.performReading())
+    {
+      Serial << "Error reading sensor." << endl;
+      return;
+    }
+    // output pressure and temp to serial
+    Serial << "Pressure: " << bmpSensor.pressure / 100 << " hPa" << endl;
+    Serial << "Temp: " << bmpSensor.temperature << " C" << endl;
   }
 }
