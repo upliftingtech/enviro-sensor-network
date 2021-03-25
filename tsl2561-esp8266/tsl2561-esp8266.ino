@@ -15,7 +15,11 @@
   the ADDR pin float (addr 0x39), or tie it to ground or vcc. In those cases
   use TSL2561_ADDR_LOW (0x29) or TSL2561_ADDR_HIGH (0x49) respectively
 */
-Adafruit_TSL2561 lightSensor = Adafruit_TSL2561(TSL2561_ADDR_FLOAT, 12345);
+Adafruit_TSL2561_Unified tsl = Adafruit_TSL2561_Unified(TSL2561_ADDR_FLOAT, 12345);
+
+// Instantiate a Chrono object.
+Chrono timeToSample;
+
 
 /**************************************************************************/
 /*
@@ -43,7 +47,7 @@ void configureSensor(void)
 }
 
 
-void setup();
+void setup()
 {
     Serial.begin(115200);
     
@@ -60,7 +64,7 @@ void setup();
 
 }
 
-void loop();
+void loop()
 {
     sensors_event_t event;
 
