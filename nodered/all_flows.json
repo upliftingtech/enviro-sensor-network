@@ -1,0 +1,456 @@
+[
+    {
+        "id": "3b47c3a6.bce684",
+        "type": "tab",
+        "label": "Send one second timestamp via mqtt",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "5e132af9.fc02bc",
+        "type": "tab",
+        "label": "basement temp graph",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "df432ec7.e4e1",
+        "type": "tab",
+        "label": "outdoor air temperature",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9a79c8b6.baa3",
+        "type": "tab",
+        "label": "outdoor air pressure",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "21775b70.7d109c",
+        "type": "tab",
+        "label": "sky light",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "c3aab26b.4800e8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "pi 3 MQTT broker",
+        "broker": "192.168.2.10",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "32c91434.3dd3ec",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey"
+            }
+        },
+        "site": {
+            "name": "Node-Red Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "f8065e17.7f74c8",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Tab 1",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "d0fbf7bf.0934d",
+        "type": "ui_group",
+        "z": "",
+        "name": "Temperatures",
+        "tab": "f8065e17.7f74c8",
+        "order": 1,
+        "disp": true,
+        "width": "10",
+        "collapse": false
+    },
+    {
+        "id": "41ae589e.353c98",
+        "type": "ui_group",
+        "z": "",
+        "name": "Pressures",
+        "tab": "f8065e17.7f74c8",
+        "order": 2,
+        "disp": true,
+        "width": "10",
+        "collapse": false
+    },
+    {
+        "id": "3d29f607.a3ec72",
+        "type": "inject",
+        "z": "3b47c3a6.bce684",
+        "name": "one second timestamp",
+        "topic": "timestamp",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "f867594.901f328"
+            ]
+        ]
+    },
+    {
+        "id": "f867594.901f328",
+        "type": "mqtt out",
+        "z": "3b47c3a6.bce684",
+        "name": "pi 3 mqtt broker",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "c3aab26b.4800e8",
+        "x": 430,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "e195ed91.2cd8f",
+        "type": "ui_chart",
+        "z": "5e132af9.fc02bc",
+        "name": "basement temp graph",
+        "group": "d0fbf7bf.0934d",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "label": "basement (C)",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "18",
+        "ymax": "26",
+        "removeOlder": "8",
+        "removeOlderPoints": "5000",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "x": 780,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d0aec34c.5e0f4",
+        "type": "mqtt in",
+        "z": "5e132af9.fc02bc",
+        "name": "sensor 001 mqtt message",
+        "topic": "sensors/001",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "c3aab26b.4800e8",
+        "x": 380,
+        "y": 340,
+        "wires": [
+            [
+                "e195ed91.2cd8f"
+            ]
+        ]
+    },
+    {
+        "id": "a0f21330.b1a73",
+        "type": "mqtt in",
+        "z": "9a79c8b6.baa3",
+        "name": "listen to outdoor air pressure",
+        "topic": "pressure/002",
+        "qos": "0",
+        "datatype": "utf8",
+        "broker": "c3aab26b.4800e8",
+        "x": 290,
+        "y": 120,
+        "wires": [
+            [
+                "421c8d6c.40f1ac"
+            ]
+        ]
+    },
+    {
+        "id": "421c8d6c.40f1ac",
+        "type": "ui_chart",
+        "z": "9a79c8b6.baa3",
+        "name": "graph outdoor air pressure",
+        "group": "41ae589e.353c98",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "label": "outdoor air pressure (hPa)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "1005",
+        "ymax": "1025",
+        "removeOlder": "8",
+        "removeOlderPoints": "5000",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "x": 650,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c263efe0.06b268",
+        "type": "ui_chart",
+        "z": "df432ec7.e4e1",
+        "name": "graph outdoor air temperature",
+        "group": "d0fbf7bf.0934d",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "outdoor temperature (C)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "30",
+        "removeOlder": "8",
+        "removeOlderPoints": "5000",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "x": 680,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cd80bdd3.7a3098",
+        "type": "mqtt in",
+        "z": "df432ec7.e4e1",
+        "name": "listen for outdoor temperature",
+        "topic": "temperature/002",
+        "qos": "0",
+        "datatype": "utf8",
+        "broker": "c3aab26b.4800e8",
+        "x": 370,
+        "y": 320,
+        "wires": [
+            [
+                "c263efe0.06b268"
+            ]
+        ]
+    },
+    {
+        "id": "5eb4f2da.3dc2c4",
+        "type": "mqtt in",
+        "z": "21775b70.7d109c",
+        "name": "listen to sky light (lux)",
+        "topic": "light/001",
+        "qos": "0",
+        "datatype": "utf8",
+        "broker": "c3aab26b.4800e8",
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "81a32255.cc3058"
+            ]
+        ]
+    },
+    {
+        "id": "81a32255.cc3058",
+        "type": "ui_chart",
+        "z": "21775b70.7d109c",
+        "name": "graph sky light",
+        "group": "41ae589e.353c98",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "label": "sky light (lux)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "2000",
+        "removeOlder": "8",
+        "removeOlderPoints": "5000",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "x": 680,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    }
+]
