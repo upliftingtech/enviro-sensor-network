@@ -1,7 +1,13 @@
+#include <Streaming.h>
+#include <Chrono.h>
     #include <Adafruit_PCT2075.h>
      
      
     Adafruit_PCT2075 PCT2075;
+    
+// Instantiate a Chrono object.
+Chrono timeToSample;
+
      
     void setup() {
       PCT2075 = Adafruit_PCT2075();
@@ -21,6 +27,12 @@
     }
      
     void loop() {
+        if (timeToSample.hasPassed(10000))
+  {
+    // reset chrono timer
+    timeToSample.restart();
+
       Serial.print("Temperature: "); Serial.print(PCT2075.getTemperature());Serial.println(" C");
-      delay(1000);
+      
     }
+    } // end loop()
