@@ -27,12 +27,12 @@ Serial.println("Found PCT2075 chip");
 }
 
 void loop() {
-if (timeToSample.hasPassed(10000))
+if (timeToSample.hasPassed(1000))
   {
   // reset chrono timer
   timeToSample.restart();
   
-  Serial.print("Temperature: "); Serial.print(PCT2075.getTemperature());Serial.println(" C");
+  Serial << "Temperature: " << PCT2075.getTemperature() << " C" << endl;
   
   }
 } // end loop()
