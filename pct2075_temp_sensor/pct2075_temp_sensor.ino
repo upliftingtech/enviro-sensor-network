@@ -114,7 +114,7 @@ if (timeToSample.hasPassed(1000))
   Serial << "Temperature: " << PCT2075.getTemperature() << " C" << endl;
   
     // send temp to mqtt
-    snprintf(msg, MSG_BUFFER_SIZE, "%3.1f", PCT2075.getTemperature());
+    snprintf(msg, MSG_BUFFER_SIZE, "%3.2f", PCT2075.getTemperature());
     mqttClient.publish("temperature/005", msg);
 
   }
