@@ -6,6 +6,8 @@
 // includes for ESP8266 WiFi - https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/readme.html#
 #include <ESP8266WiFi.h>
 
+#define SENSOR_NUMBER 001
+
 // Constants for WiFi
 const char* ssid = "bouncyhouse";
 const char* password = "bakabaka";
@@ -24,8 +26,9 @@ PubSubClient mqttClient(wifiClient);
 
 Adafruit_PCT2075 PCT2075;
 
-// Instantiate a Chrono object.
-Chrono timeToSample;
+// Instantiate Chrono objects.
+Chrono timeToHighresSample;
+Chrono timeToLowresSample;
 
 // Instantiate an Arduino String class to store our client ID
 String clientId = "sensor-";
@@ -106,16 +109,26 @@ void loop() {
   if (!mqttClient.connected()) reconnect();
   mqttClient.loop(); // non-blocking mqtt background updates
 
-if (timeToSample.hasPassed(1000))
+if (timeToHighresSample.hasPassed(1000)) // one second sample for a higer res less amount of time display
   {
   // reset chrono timer
-  timeToSample.restart();
+  timeToHighresSample.restart();
   
   Serial << "Temperature: " << PCT2075.getTemperature() << " C" << endl;
   
     // send temp to mqtt
     snprintf(msg, MSG_BUFFER_SIZE, "%3.2f", PCT2075.getTemperature());
-    mqttClient.publish("temperature/005", msg);
+    mqttClient.publish("indoortemp/highres/SENSOR_NUMBER", msg);
 
+  }
+  
+  if (timeToLowresSample.hasPassed(30000)) // 30 seconds sample for a lower res more time display
+  {
+    // reset chrono timer
+    timeToLowresSample.restart();
+  
+    // send temp to mqtt
+    snprintf(msg, MSG_BUFFER_SIZE, "%3.2f", PCT2075.getTemperature());
+    mqttClient.publish("indoortemp/lowres/SENSOR_NUMBER", msg);
   }
 } // end loop()
