@@ -6,8 +6,6 @@
 // includes for ESP8266 WiFi - https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/readme.html#
 #include <ESP8266WiFi.h>
 
-#define SENSOR_NUMBER 001
-
 // Constants for WiFi
 const char* ssid = "bouncyhouse";
 const char* password = "bakabaka";
@@ -118,7 +116,7 @@ if (timeToHighresSample.hasPassed(1000)) // one second sample for a higer res le
   
     // send temp to mqtt
     snprintf(msg, MSG_BUFFER_SIZE, "%3.2f", PCT2075.getTemperature());
-    mqttClient.publish("indoortemp/highres/SENSOR_NUMBER", msg);
+    mqttClient.publish("indoortemp/highres/002", msg);
 
   }
   
@@ -129,6 +127,6 @@ if (timeToHighresSample.hasPassed(1000)) // one second sample for a higer res le
   
     // send temp to mqtt
     snprintf(msg, MSG_BUFFER_SIZE, "%3.2f", PCT2075.getTemperature());
-    mqttClient.publish("indoortemp/lowres/SENSOR_NUMBER", msg);
+    mqttClient.publish("indoortemp/lowres/002", msg);
   }
 } // end loop()
