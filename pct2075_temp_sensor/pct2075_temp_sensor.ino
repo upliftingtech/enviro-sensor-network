@@ -60,7 +60,7 @@ void reconnect() {
     if (mqttClient.connect(clientId.c_str())) {
       Serial << "connected" << endl;
       // Once connected, publish an announcement...
-      mqttClient.publish("outTopic", "hello world");
+      mqttClient.publish("debug", "hello world");
     } 
     else {
       Serial << "failed, rc=" << mqttClient.state() << " try again in 5 seconds" << endl;
@@ -116,7 +116,7 @@ if (timeToHighresSample.hasPassed(1000)) // one second sample for a higer res le
   
     // send temp to mqtt
     snprintf(msg, MSG_BUFFER_SIZE, "%3.2f", PCT2075.getTemperature());
-    mqttClient.publish("indoortemp/highres/002", msg);
+    mqttClient.publish("temp/highres/basement", msg);
 
   }
   
@@ -127,6 +127,6 @@ if (timeToHighresSample.hasPassed(1000)) // one second sample for a higer res le
   
     // send temp to mqtt
     snprintf(msg, MSG_BUFFER_SIZE, "%3.2f", PCT2075.getTemperature());
-    mqttClient.publish("indoortemp/lowres/002", msg);
+    mqttClient.publish("temp/highres/basement", msg);
   }
 } // end loop()
