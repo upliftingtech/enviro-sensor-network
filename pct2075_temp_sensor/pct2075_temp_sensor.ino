@@ -127,6 +127,6 @@ if (timeToHighresSample.hasPassed(1000)) // one second sample for a higer res le
   
     // send temp to mqtt
     snprintf(msg, MSG_BUFFER_SIZE, "%3.2f", PCT2075.getTemperature());
-    mqttClient.publish("temp/highres/basement", msg);
+    mqttClient.publish("temp/lowres/basement", msg);
   }
 } // end loop()
