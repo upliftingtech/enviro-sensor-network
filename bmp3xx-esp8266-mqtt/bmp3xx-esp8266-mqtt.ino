@@ -65,7 +65,7 @@ void reconnect() {
     if (mqttClient.connect(clientId.c_str())) {
       Serial << "connected" << endl;
       // Once connected, publish an announcement...
-      mqttClient.publish("outTopic", "hello world");
+      mqttClient.publish("debug", "hello world");
     } 
     else {
       Serial << "failed, rc=" << mqttClient.state() << " try again in 5 seconds" << endl;
@@ -119,7 +119,7 @@ void loop()
   
   // every 10 seconds take a sample and output to mqtt
 
-  if (timeToSample.hasPassed(10000))
+  if (timeToSample.hasPassed(30000)) // 30 seconds low res
   {
     // reset chrono timer
     timeToSample.restart();
@@ -135,7 +135,7 @@ void loop()
     
     // send temp and pressure to mqtt
     snprintf(msg, MSG_BUFFER_SIZE, "%3.1f", bmpSensor.temperature);
-    mqttClient.publish("temperature/002", msg);
+    mqttClient.publish("temp/lowres/outdoor", msg);
     snprintf(msg, MSG_BUFFER_SIZE, "%3.1f", bmpSensor.pressure / 100);
     mqttClient.publish("pressure/002", msg);
   }
